@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tourist Safety Hub | Premium Explorer</title>
+  
+  <!-- External CSS -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
+</head>
+
+<body class="risk-low">
+  <div class="logo">
+    <span>🗺️ TOURIST SAFE HUB</span>
+    <span id="systemClock" class="hud-clock">00:00:00</span>
+  </div>
+
+  <div class="menu">
+        <button onclick="showFeature('weather', this)">METEOROLOGY</button>
+        <button onclick="showFeature('chat', this)">WORLD CHAT</button>
+        <button onclick="showFeature('contact', this)">SUPPORT</button>
+  </div>
+
+  <div class="content" id="contentBox">
+    <h1 class="hero-title">TRAVEL WITH <br>PEACE OF MIND</h1>
+    <p class="hero-subtitle">The world's most advanced safety companion for the modern explorer.</p>
+    <button class="submit-btn" onclick="showContent('signin')">INITIALIZE HUB</button>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <h3 class="color-primary">24/7</h3>
+        <p class="stat-label">Monitoring</p>
+      </div>
+      <div class="stat-item">
+        <h3 class="color-danger">1-TAP</h3>
+        <p class="stat-label">SOS Response</p>
+      </div>
+      <div class="stat-item">
+        <h3 class="color-accent">GLOBAL</h3>
+        <p class="stat-label">Coverage</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

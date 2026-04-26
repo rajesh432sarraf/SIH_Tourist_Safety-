@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safety Hub Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+      transition: background 1s ease-in-out;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80') no-repeat center center/cover;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    .logo {
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #FF8C00;
+    }
+
+    .container {
+      display: flex;
+      height: 100%;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-right: 1px solid #444;
+    }
+
+    .main {
+      flex: 1;
+      padding: 40px;
+      color: white;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+      margin-bottom: 20px;
+    }
+
+    button {
+      background: #FF8C00;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">
+    <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Safety Hub Logo" style="height: 30px; vertical-align: middle;">
+    Safety Hub
+  </div>
+  
+  <div class="container">
+    <div class="sidebar">
+      <h3 style="color: white;">MENU</h3>
+      <ul style="list-style: none; padding: 0; color: white;">
+        <li style="padding: 10px 0;">Dashboard</li>
+        <li style="padding: 10px 0;">Emergency</li>
+        <li style="padding: 10px 0;">Settings</li>
+      </ul>
+    </div>
+    
+    <div class="main">
+      <h1>Safety Hub Dashboard</h1>
+      <div class="card">
+        <h2>Welcome, Explorer!</h2>
+        <p>Current Threat Level: <span style="color: #00FF88;">LOW</span></p>
+      </div>
+      
+      <div class="card">
+        <h2>Live Meteorological Scan</h2>
+        <div id="weather">Loading weather...</div>
+      </div>
+      
+      <button onclick="triggerSOS()">EMERGENCY SOS</button>
+    </div>
+  </div>
+
+  <script>
+    function triggerSOS() {
+      alert("EMERGENCY SIGNAL SENT! Help is on the way.");
+    }
+
+    // Weather Simulation
+    setTimeout(() => {
+      document.getElementById('weather').innerText = "Temp: 24°C | Condition: Clear Sky";
+    }, 2000);
+  </script>
+</body>
+</html>

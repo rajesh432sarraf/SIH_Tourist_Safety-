@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourist Safety Hub | Version 4</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 { color: #1a73e8; }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .feature-card {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .submit-btn {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Safety Hub v4 - Secure Environment</h1>
+        <p>This version focuses on user reporting and emergency response.</p>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>Live Map</h3>
+                <p>Tracking active.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Weather</h3>
+                <p>Sky clear.</p>
+            </div>
+        </div>
+
+        <div class="contact-form" style="margin-top: 40px;">
+            <h2>Send Emergency Report</h2>
+            <input type="text" placeholder="Your Name">
+            <input type="email" placeholder="Your Email">
+            <textarea placeholder="Describe the emergency..."></textarea>
+            <button class="submit-btn" onclick="alert('Report Submitted!')">Submit Report</button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Hub | Authentication</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Firebase for Social Login -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <style>
+        body.auth-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #121212;
+            color: white;
+        }
+        .auth-card {
+            background: #1e1e1e;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+        .social-buttons button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .google-btn { background: #db4437; color: white; }
+        .fb-btn { background: #4267b2; color: white; }
+        .submit-btn { background: #FF8C00; color: white; width: 100%; padding: 12px; border: none; border-radius: 10px; cursor: pointer; margin-top: 10px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 1px solid #333; background: #222; color: white; box-sizing: border-box; }
+        a { color: #FF8C00; text-decoration: none; }
+    </style>
+</head>
+<body class="auth-page">
+    <div class="auth-card">
+        <h2 style="color: #FF8C00;">SOCIAL LOGIN</h2>
+        <div class="social-buttons">
+            <button onclick="loginWithGoogle()" class="google-btn">Login with Google</button>
+            <button onclick="loginWithFacebook()" class="fb-btn">Login with Facebook</button>
+        </div>
+        
+        <div style="margin: 20px 0; opacity: 0.5;">OR</div>
+        
+        <div id="forgotPasswordSection">
+            <h3>Forgot Password?</h3>
+            <input type="email" id="recoveryEmail" placeholder="Enter your email">
+            <button onclick="sendRecoveryEmail()" class="submit-btn">Send Recovery Link</button>
+        </div>
+        
+        <p style="margin-top: 30px;"><a href="SIH.HTML">← Back to Dashboard</a></p>
+    </div>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        function loginWithGoogle() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            firebase.auth().signInWithPopup(provider).then(result => {
+                alert("Welcome " + result.user.displayName);
+                window.location.href = "SIH.HTML";
+            }).catch(error => alert(error.message));
+        }
+
+        function loginWithFacebook() {
+            const provider = new firebase.auth.FacebookAuthProvider();
+            firebase.auth().signInWithPopup(provider).then(result => {
+                alert("Welcome " + result.user.displayName);
+                window.location.href = "SIH.HTML";
+            }).catch(error => alert(error.message));
+        }
+
+        function sendRecoveryEmail() {
+            const email = document.getElementById('recoveryEmail').value;
+            if(!email) return alert("Please enter an email!");
+            firebase.auth().sendPasswordResetEmail(email)
+                .then(() => alert("Recovery email sent! Check your inbox."))
+                .catch(error => alert(error.message));
+        }
+    </script>
+</body>
+</html>
