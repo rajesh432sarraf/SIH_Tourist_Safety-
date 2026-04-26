@@ -99,7 +99,7 @@ function showFeature(feature, btn, userName = "Explorer") {
     map.remove();
     map = null;
   }
-  
+
   if (window.chatInterval) {
     clearInterval(window.chatInterval);
     window.chatInterval = null;
@@ -189,9 +189,9 @@ function showFeature(feature, btn, userName = "Explorer") {
                         <div>
                             <label style="font-size:10px; color:var(--primary);">GENDER</label>
                             <select id="editGender" style="width:100%; background:rgba(255,255,255,0.05); color:white; border:1px solid #444; padding:10px; border-radius:10px;">
-                                <option value="MALE" ${localStorage.getItem('explorerGender')==='MALE'?'selected':''}>MALE</option>
-                                <option value="FEMALE" ${localStorage.getItem('explorerGender')==='FEMALE'?'selected':''}>FEMALE</option>
-                                <option value="OTHER" ${localStorage.getItem('explorerGender')==='OTHER'?'selected':''}>OTHER</option>
+                                <option value="MALE" ${localStorage.getItem('explorerGender') === 'MALE' ? 'selected' : ''}>MALE</option>
+                                <option value="FEMALE" ${localStorage.getItem('explorerGender') === 'FEMALE' ? 'selected' : ''}>FEMALE</option>
+                                <option value="OTHER" ${localStorage.getItem('explorerGender') === 'OTHER' ? 'selected' : ''}>OTHER</option>
                             </select>
                         </div>
                         <div>
@@ -272,26 +272,26 @@ function setPhotoByUrl() {
 }
 
 function saveIdentity() {
-    const newName = document.getElementById('editName').value.trim();
-    const gender = document.getElementById('editGender').value;
-    const dob = document.getElementById('editDOB').value;
-    
-    if(!newName) return showToast("Name is required!");
+  const newName = document.getElementById('editName').value.trim();
+  const gender = document.getElementById('editGender').value;
+  const dob = document.getElementById('editDOB').value;
 
-    localStorage.setItem('explorerName', newName);
-    localStorage.setItem('explorerGender', gender);
-    localStorage.setItem('explorerDOB', dob);
-    
-    window.currentUser = newName;
-    
-    // Update Display Elements
-    const previewName = document.getElementById('displayExplorerName');
-    if (previewName) previewName.innerText = newName.toUpperCase();
-    
-    const sidebarName = document.querySelector('.sidebar-logo span:first-child');
-    if (sidebarName) sidebarName.innerText = "🗺️ " + newName.toUpperCase();
+  if (!newName) return showToast("Name is required!");
 
-    showToast("Global Identity Synchronized");
+  localStorage.setItem('explorerName', newName);
+  localStorage.setItem('explorerGender', gender);
+  localStorage.setItem('explorerDOB', dob);
+
+  window.currentUser = newName;
+
+  // Update Display Elements
+  const previewName = document.getElementById('displayExplorerName');
+  if (previewName) previewName.innerText = newName.toUpperCase();
+
+  const sidebarName = document.querySelector('.sidebar-logo span:first-child');
+  if (sidebarName) sidebarName.innerText = "🗺️ " + newName.toUpperCase();
+
+  showToast("Global Identity Synchronized");
 }
 
 // --- Key Enhancement: Interactive Threat System ---
@@ -344,7 +344,7 @@ async function updateMiniWeather() {
     const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=28.61&longitude=77.20&current_weather=true');
     const data = await res.json();
     document.getElementById("miniTemp").innerText = `${data.current_weather.temperature}°C`;
-  } catch (e) {}
+  } catch (e) { }
 }
 
 async function initMap(category = null) {
@@ -360,15 +360,15 @@ async function initMap(category = null) {
       const query = `[out:json];node["amenity"="${category}"](around:2000,${c[0]},${c[1]});out;`;
       const res = await fetch(`https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`);
       const data = await res.json();
-      
+
       data.elements.forEach(el => {
         L.circleMarker([el.lat, el.lon], {
-            color: category === 'police' ? 'red' : 'orange',
-            radius: 8
+          color: category === 'police' ? 'red' : 'orange',
+          radius: 8
         }).addTo(map).bindPopup(`<b>${el.tags.name || category.toUpperCase()}</b><br>Safe Zone Entity`);
       });
-      
-      if(data.elements.length === 0) showToast("No results in 2km radius");
+
+      if (data.elements.length === 0) showToast("No results in 2km radius");
     } catch (e) { console.error("Map data error"); }
   }
 }
@@ -385,62 +385,62 @@ function triggerSOS() {
 
 // --- World Chat Logic ---
 async function loadChat() {
-    const box = document.getElementById("chatMessages");
-    if (!box) { 
-        if(window.chatInterval) clearInterval(window.chatInterval); 
-        return; 
-    }
-    try {
-        const res = await fetch(`${API_BASE_URL}/chat`);
-        if (!res.ok) throw new Error("Fetch failed");
-        const msgs = await res.json();
-        
-        if (msgs.length === 0) {
-            box.innerHTML = '<div class="msg received">No messages yet. Start the conversation!</div>';
-            return;
-        }
+  const box = document.getElementById("chatMessages");
+  if (!box) {
+    if (window.chatInterval) clearInterval(window.chatInterval);
+    return;
+  }
+  try {
+    const res = await fetch(`${API_BASE_URL}/chat`);
+    if (!res.ok) throw new Error("Fetch failed");
+    const msgs = await res.json();
 
-        box.innerHTML = msgs.map(m => `
+    if (msgs.length === 0) {
+      box.innerHTML = '<div class="msg received">No messages yet. Start the conversation!</div>';
+      return;
+    }
+
+    box.innerHTML = msgs.map(m => `
             <div class="msg ${m.user_name === window.currentUser ? 'sent' : 'received'}">
                 <span class="sender">${m.user_name.toUpperCase()} • ${new Date(m.created_at).toLocaleTimeString()}</span>
                 ${m.message}
             </div>
         `).join('');
-        box.scrollTop = box.scrollHeight;
-    } catch (e) { 
-        console.error("Chat load error:", e);
-    }
+    box.scrollTop = box.scrollHeight;
+  } catch (e) {
+    console.error("Chat load error:", e);
+  }
 }
 
 async function sendWorldMessage() {
-    const userName = localStorage.getItem('explorerName') || "Explorer";
-    window.currentUser = userName;
-    const input = document.getElementById("worldChatInput");
-    const msg = input.value.trim();
-    if (!msg) return;
-    
-    console.log("Attempting to send message:", msg);
-    input.value = "";
+  const userName = localStorage.getItem('explorerName') || "Explorer";
+  window.currentUser = userName;
+  const input = document.getElementById("worldChatInput");
+  const msg = input.value.trim();
+  if (!msg) return;
 
-    try {
-        const res = await fetch(`${API_BASE_URL}/chat`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ user_name: userName, user_email: "user@example.com", message: msg })
-        });
-        
-        if (res.ok) {
-            console.log("Message sent successfully");
-            loadChat();
-        } else {
-            const err = await res.json();
-            console.error("Server Error:", err);
-            showToast("Server Error: " + err.message);
-        }
-    } catch (e) { 
-        console.error("Network Error:", e);
-        showToast("Transmission Failed: Check Connection"); 
+  console.log("Attempting to send message:", msg);
+  input.value = "";
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/chat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_name: userName, user_email: "user@example.com", message: msg })
+    });
+
+    if (res.ok) {
+      console.log("Message sent successfully");
+      loadChat();
+    } else {
+      const err = await res.json();
+      console.error("Server Error:", err);
+      showToast("Server Error: " + err.message);
     }
+  } catch (e) {
+    console.error("Network Error:", e);
+    showToast("Transmission Failed: Check Connection");
+  }
 }
 
 function showToast(m) {
